@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  slack_dictionary_app:
+    container_name: slack_dictionary_app
+    build:
+      context: .
+      args:
+        - AWS_ACCESS_KEY=$AWS_ACCESS_KEY
+        - AWS_SECRET_KEY=$AWS_SECRET_KEY
+    command: sls offline --httpPort 9000 --host 0.0.0.0
+    tty: true
+    ports:
+      - 9000:9000
+    volumes:
+      - ./app:/app
+      # cacheディレクトリもvolumesに指定することでDockerコンテナ内でyarn addすると遅い問題を解決
+      - ./app:${PWD}/app
+      - yarn-cache:/usr/local/share/.cache/yarn/v2
+    working_dir: ${PWD}/app
+
+volumes:
+  yarn-cache:

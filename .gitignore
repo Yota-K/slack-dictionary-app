@@ -1,0 +1,13 @@
+# package directories
+app/node_modules
+app/jspm_packages
+
+# Serverless directories
+app/.serverless
+
+# esbuild directories
+app/.esbuild
+
+# env
+.env
+app/.env
