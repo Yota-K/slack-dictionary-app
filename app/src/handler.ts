@@ -1,8 +1,7 @@
-import { middyfy } from '@libs/lambda';
 import { App, ExpressReceiver } from '@slack/bolt';
-import { APIGatewayEvent, Context, Handler } from 'aws-lambda';
+import { APIGatewayEvent, Context } from 'aws-lambda';
 import * as awsServerlessExpress from 'aws-serverless-express';
-import { ENV } from '../../config';
+import { ENV } from './config';
 
 // ------------------------
 // Bolt App Initialization
@@ -41,8 +40,6 @@ app.command('/tell-me-word', async ({ command, logger, ack, say }) => {
 // AWS Lambda handler
 // ------------------------
 const server = awsServerlessExpress.createServer(expressReceiver.app);
-const tellMeWord: Handler = async (event: APIGatewayEvent, context: Context) => {
+module.exports.app = (event: APIGatewayEvent, context: Context) => {
   awsServerlessExpress.proxy(server, event, context);
 };
-
-export const main = middyfy(tellMeWord);
