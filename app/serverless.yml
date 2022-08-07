@@ -1,5 +1,6 @@
 service: slack-dictionary-app
 
+# 環境変数をenvで読み込ませる場合に必要
 useDotenv: true
 
 plugins:
@@ -39,3 +40,6 @@ custom:
     define: { 'require.resolve': undefined }
     platform: node
     concurrency: 10
+  serverless-offline:
+    httpPort: 9000
+    host: 0.0.0.0
